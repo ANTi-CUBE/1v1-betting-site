@@ -1,1 +1,3 @@
-{ "users": [], "challenges": [] }
+{
+  "message": "This is dummy data from the backend database"
+}
