@@ -1,1 +1,98 @@
-<!-- صفحة تسجيل الدخول -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>1v1 Betting Site</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 1v1 Betting Site</h1>
+
+  <form id="challenge-form">
+    <input type="text" id="player1" placeholder="Player 1" required />
+    <input type="text" id="player2" placeholder="Player 2" required />
+    <input type="number" id="amount" placeholder="Bet Amount" required />
+    <button type="submit">Create Challenge</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
+  <script>
+    const form = document.getElementById("challenge-form");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const player1 = document.getElementById("player1").value;
+      const player2 = document.getElementById("player2").value;
+      const amount = document.getElementById("amount").value;
+
+      try {
+        const response = await fetch("https://onev1-betting-site.onrender.com/challenges", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ player1, player2, amount }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          message.textContent = "✅ Challenge created with ID: " + result.id;
+          form.reset();
+        } else {
+          message.textContent = "❌ Error: " + (result.error || "Failed to create challenge.");
+        }
+      } catch (error) {
+        message.textContent = "❌ Network error.";
+      }
+    });
+  </script>
+</body>
+</html>

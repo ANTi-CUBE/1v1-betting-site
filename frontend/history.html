@@ -1,1 +1,75 @@
-<!-- سجل التحديات -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Challenge History</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+
+    table {
+      margin: 0 auto;
+      width: 80%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>📜 Challenge History</h1>
+
+  <table id="history-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch("https://onev1-betting-site.onrender.com/challenges")
+      .then(res => res.json())
+      .then(data => {
+        const table = document.querySelector("#history-table tbody");
+        data.forEach(challenge => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${challenge.id}</td>
+            <td>${challenge.player1}</td>
+            <td>${challenge.player2}</td>
+            <td>${challenge.amount}</td>
+          `;
+          table.appendChild(row);
+        });
+      })
+      .catch(() => {
+        const table = document.querySelector("#history-table tbody");
+        table.innerHTML = "<tr><td colspan='4'>❌ Failed to load history.</td></tr>";
+      });
+  </script>
+</body>
+</html>

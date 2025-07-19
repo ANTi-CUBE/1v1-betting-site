@@ -1,1 +1,48 @@
-<!-- لوحة المستخدم -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f7f7f7;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .box {
+      display: inline-block;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-top: 30px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 User Dashboard</h1>
+
+  <div class="box" id="stats">
+    Loading...
+  </div>
+
+  <script>
+    fetch("https://onev1-betting-site.onrender.com/challenges")
+      .then(res => res.json())
+      .then(data => {
+        const total = data.length;
+        document.getElementById("stats").textContent = `Total Challenges: ${total}`;
+      })
+      .catch(() => {
+        document.getElementById("stats").textContent = "❌ Failed to load stats.";
+      });
+  </script>
+</body>
+</html>
